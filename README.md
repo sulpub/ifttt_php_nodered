@@ -83,13 +83,13 @@ After running nodered on the raspberrypi, open the link for adding the script to
 
 The NodeRed interface is at this link : http://raspberrypi_adress:1880
 
-![Node red interface with the websocket script](images/nodered_p1.JPG)
+![Node red interface with the websocket script](images/nodered_p1.jpg)
 
 Open the script test with notepad and add the script by copy paste the text to import/clipboard.
 
-![Access for import clipboard](images/nodered_p2.JPG)
+![Access for import clipboard](images/nodered_p2.jpg)
 
-![Paste the text in the import node](images/nodered_p3.JPG)
+![Paste the text in the import node](images/nodered_p3.jpg)
 
 # PHP file
 
