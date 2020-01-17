@@ -1,0 +1,214 @@
+[
+    {
+        "id": "b52a610a.6295",
+        "type": "comment",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "IFTTT & Google voice (using php web page and websocket 1222)-------------------------------------------------------------------------------------------------------------------",
+        "info": "",
+        "x": 540,
+        "y": 30,
+        "wires": []
+    },
+    {
+        "id": "1b9716ef.bc8931",
+        "type": "debug",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "Websocket receive",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "74b9db0.0aad124",
+        "type": "tcp in",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "websocket 1222",
+        "server": "server",
+        "host": "",
+        "port": "1222",
+        "datamode": "single",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "base64": false,
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "1b9716ef.bc8931",
+                "83318d5d.3eb498"
+            ]
+        ]
+    },
+    {
+        "id": "83318d5d.3eb498",
+        "type": "function",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "Action message",
+        "func": "// For this example there are one output and two message\n\n//message 1 : for turn on or off light\n//after you can customize the output for trimming light....\n\nvar msg1 = { payload:\"vide\" };\nvar msg2 = { payload:\"vide\" }; //not use for other dev\nvar msg3 = { payload:\"vide\" }; //not use for other dev\nvar msg4 = { payload:\"vide\" }; //not use for other dev\n\nif (msg.payload === \"light on\")\n {\n     msg.payload = 1;\n     return [msg , null , null, null];\n }\nelse if  (msg.payload === \"light off\")\n {\n     msg.payload = 1;\n     return [null , msg , null, null];\n }\nelse\n {\n     return [null , null , null, null];\n }",
+        "outputs": 4,
+        "noerr": 0,
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "b44f3f4b.429638",
+                "8776f58f.e1f9a"
+            ],
+            [
+                "f9e11a95.adfac8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b44f3f4b.429638",
+        "type": "debug",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 590,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "209deb61.0138c4",
+        "type": "rpi-gpio out",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "",
+        "pin": "12",
+        "set": true,
+        "level": "0",
+        "out": "out",
+        "x": 800,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8776f58f.e1f9a",
+        "type": "trigger",
+        "z": "1cf51e6.cb9f7e2",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "Lampe salon ON",
+        "x": 610,
+        "y": 180,
+        "wires": [
+            [
+                "209deb61.0138c4"
+            ]
+        ]
+    },
+    {
+        "id": "969dc547.1048a8",
+        "type": "rpi-gpio out",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "",
+        "pin": "16",
+        "set": true,
+        "level": "0",
+        "out": "out",
+        "x": 800,
+        "y": 230,
+        "wires": []
+    },
+    {
+        "id": "f9e11a95.adfac8",
+        "type": "trigger",
+        "z": "1cf51e6.cb9f7e2",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "2",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "Lampe salon OFF",
+        "x": 610,
+        "y": 230,
+        "wires": [
+            [
+                "969dc547.1048a8"
+            ]
+        ]
+    },
+    {
+        "id": "bf0f1b38.e2189",
+        "type": "inject",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "light on",
+        "topic": "allumer le salon",
+        "payload": "light on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "83318d5d.3eb498"
+            ]
+        ]
+    },
+    {
+        "id": "adf744.bd9550c",
+        "type": "inject",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "light off",
+        "topic": "�teindre le salon",
+        "payload": "light off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "83318d5d.3eb498"
+            ]
+        ]
+    },
+    {
+        "id": "a5a82cae.96147",
+        "type": "comment",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "IO raspberrypi for commute RF 433MHz controller",
+        "info": "",
+        "x": 710,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "c3f08b9a.cca55",
+        "type": "comment",
+        "z": "1cf51e6.cb9f7e2",
+        "name": "Test command without ifttt",
+        "info": "",
+        "x": 130,
+        "y": 160,
+        "wires": []
+    }
+]
